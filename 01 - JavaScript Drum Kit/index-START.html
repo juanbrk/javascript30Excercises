@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+  <script src="./sounds.js" type="text/javascript"></script>
+  <audio data-key="65" class="scandalous-music"src="sounds/clap.wav"></audio>
+  <audio data-key="83" class="scandalous-music"src="sounds/hihat.wav"></audio>
+  <audio data-key="68" class="scandalous-music"src="sounds/kick.wav"></audio>
+  <audio data-key="70" class="scandalous-music"src="sounds/openhat.wav"></audio>
+  <audio data-key="71" class="scandalous-music"src="sounds/boom.wav"></audio>
+  <audio data-key="72" class="scandalous-music"src="sounds/ride.wav"></audio>
+  <audio data-key="74" class="scandalous-music"src="sounds/snare.wav"></audio>
+  <audio data-key="75" class="scandalous-music"src="sounds/tom.wav"></audio>
+  <audio data-key="76" class="scandalous-music"src="sounds/tink.wav"></audio>
+
+<script>
+const keys = Array.from(document.getElementsByClassName('keys')[0].childNodes);
+const onlyDivs = keys.filter(key => key.localName === 'div');
+const keyCodes = onlyDivs.map(div => div.attributes['data-key'].value);
+const numberCodes = keyCodes.map(code => Number(code));
+
+
+
+document.addEventListener('keydown',  key => playElement(key) );
+
+/** 
+* if key pressed is among letters A...L play sound and animate
+*/
+function playElement(keyPressed){
+  const pressedKeyValue = keyPressed.which;
+  if (numberCodes.indexOf(pressedKeyValue) !== -1) {
+    animateTheKey(pressedKeyValue);
+    playTheKeySound(pressedKeyValue);
+    
+  }
+}
+
+function animateTheKey(keyToAnimateValue){
+  const div = onlyDivs.filter(div => div.attributes['data-key'].value == keyToAnimateValue)[0];
+  div.classList.add('playing');
+  removePlayingClass(div);
+}
+
+function playTheKeySound(keyToPlayValue){
+  const audios = Array.from(document.getElementsByClassName('scandalous-music')).filter(audio => audio.attributes['data-key'].value == keyToPlayValue);
+  const theAudioElementToPlay = audios.filter(audio => audio.attributes['data-key'].value == keyToPlayValue);
+  theAudioElementToPlay.play();
+}
+
+function removePlayingClass(element){
+  setTimeout(() => { element.classList.remove('playing'); }, 700);
+}
+
+</script>
+
+
+</body>
+</html>
