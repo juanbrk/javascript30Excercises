@@ -88,7 +88,8 @@ function animateTheKey(keyToAnimateValue){
 function playTheKeySound(keyToPlayValue){
   const audios = Array.from(document.getElementsByClassName('scandalous-music')).filter(audio => audio.attributes['data-key'].value == keyToPlayValue);
   const theAudioElementToPlay = audios.filter(audio => audio.attributes['data-key'].value == keyToPlayValue);
-  theAudioElementToPlay.play();
+ let audioToPlay = new Audio(theAudioElementToPlay[0].attributes['src'].value);
+  audioToPlay.play();
 }
 
 function removePlayingClass(element){
