@@ -1,0 +1,6 @@
+How did Wes solve it? And What did I learn from it?
+
+- A key value can be accesed via keyCode property
+- An element can be targeted using document.querySelector.audio[data-key="${e.keyCode}"]
+- I personally dont care if audio takes a long time to play 
+- Instead of setTimeout, which can cause delays if there exists a setTimeout in CSS (is this even a thing? Guess I'll found out at some point), Wes adds an eventListener for transitionEvents that - from what I understood, might be completely wrong - waits for every transform transition to perform before executing a LOC that removes the .playing class. 
